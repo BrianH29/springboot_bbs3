@@ -1,10 +1,7 @@
 package com.bulletin2.practice.dto;
 
 import com.bulletin2.practice.domain.Board;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.SequenceGenerator;
 import java.time.LocalDateTime;
@@ -12,30 +9,34 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @ToString
+@Setter
 public class BoardDto {
     private Long id;
-    private String writer;
     private String title;
+    private String writer;
     private String content;
     private LocalDateTime createdDate;
-    private LocalDateTime modifedDate;
+    private LocalDateTime modifiedDate;
 
-    @Builder
-    public BoardDto(String writer, String title, String content, LocalDateTime createdDate, LocalDateTime modifedDate) {
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        this.createdDate = createdDate;
-        this.modifedDate = modifedDate;
-    }
-
-
+    //domain Board
     public Board toEntity(){
         Board build = Board.builder()
-                .writer(writer)
+                .id(id)
                 .title(title)
+                .writer(writer)
                 .content(content)
                 .build();
         return build;
     }
+
+    @Builder
+    public BoardDto(Long id, String title, String writer, String content, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        this.id = id;
+        this.title = title;
+        this.writer = writer;
+        this.content = content;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+    }
+
 }

@@ -23,21 +23,17 @@
     </tr>
     </thead>
     <tbody>
-    <!--<tr th:each="board : ${boardList}">
+    <tr th:each="board : ${boardList}">
       <td><span th:text="${board.id}">1</span></td>
       <td><span th:text="${board.title}">오늘도 화이팅</span> </td>
       <td><span th:text="${board.writer}">Jack</span></td>
-      <td><span th:text="${board.createdDate}">2021-06-28</span></td>
-    </tr>-->
-
-    <tr>
-      <td><span>1</span></td>
-      <td><span>오늘도 화이팅</span> </td>
-      <td><span>Jack</span></td>
-      <td><span>2021-06-28</span></td>
+      <td><span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}">2021-06-28</span></td>
     </tr>
     </tbody>
   </table>
+
+  <a class="btn btn-light" th:href="@{/post}">글쓰기</a>
+
 </div>
 
 </body>

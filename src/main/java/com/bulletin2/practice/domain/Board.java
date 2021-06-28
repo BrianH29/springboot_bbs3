@@ -9,8 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SequenceGenerator(
         name = "BOARD_SEQ",
         sequenceName = "board_id",
@@ -26,7 +25,7 @@ public class Board extends TimeEntity{
     )
     private Long id;
 
-    @Column(length = 15, nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
 
     @Column(length = 30, nullable = false)
@@ -36,7 +35,8 @@ public class Board extends TimeEntity{
     private String content;
 
     @Builder
-    public Board(String title, String writer, String content) {
+    public Board(Long id, String title, String writer, String content) {
+        this.id = id;
         this.title = title;
         this.writer = writer;
         this.content = content;
