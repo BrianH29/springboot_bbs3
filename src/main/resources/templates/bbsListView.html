@@ -12,39 +12,29 @@
 <body>
 
 <div class="container">
-  <h2>Striped Rows</h2>
-  <p>The .table-striped class adds zebra-stripes to a table:</p>
+  <h2>Bulletin Board</h2>
   <table class="table table-striped">
     <thead>
     <tr>
       <th>no.</th>
       <th>제목</th>
       <th>작성자</th>
-      <th>조회수</th>
       <th>작성일</th>
     </tr>
     </thead>
     <tbody>
+    <!--<tr th:each="board : ${boardList}">
+      <td><span th:text="${board.id}">1</span></td>
+      <td><span th:text="${board.title}">오늘도 화이팅</span> </td>
+      <td><span th:text="${board.writer}">Jack</span></td>
+      <td><span th:text="${board.createdDate}">2021-06-28</span></td>
+    </tr>-->
+
     <tr>
-      <td>1</td>
-      <td>나도 이게 어떻게 되는지 잘 모글겠다 허허허허허 </td>
-      <td>brian2929</td>
-      <td>23</td>
-      <td>2020-12-31</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>나도 이게 어떻게 되는지 잘 모글겠다 허허허허허 </td>
-      <td>brian2929</td>
-      <td>23</td>
-      <td>2020-12-31</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>나도 이게 어떻게 되는지 잘 모글겠다 허허허허허 </td>
-      <td>brian2929</td>
-      <td>23</td>
-      <td>2020-12-31</td>
+      <td><span>1</span></td>
+      <td><span>오늘도 화이팅</span> </td>
+      <td><span>Jack</span></td>
+      <td><span>2021-06-28</span></td>
     </tr>
     </tbody>
   </table>
