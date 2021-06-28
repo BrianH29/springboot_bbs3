@@ -11,22 +11,27 @@
 </head>
 <body>
 <div class="container">
-  <form action="/post" method="POST">
     <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" name="title" placeholder="title">
+      <label class="form-label">Title</label>
+      <h2 th:text="${boardDto.title}"></h2>
+      <p th:text="${boardDto.createdDate}"></p>
     </div>
     <div class="mb-3">
-      <label for="writer" class="form-label">Writer</label>
-      <input type="text" class="form-control" id="writer" name="writer" placeholder="writer">
+      <label class="form-label">Writer</label>
+      <h2 th:text="${boardDto.writer}"></h2>
     </div>
     <div class="mb-3">
-      <label for="content" class="form-label">Content Area</label>
-      <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+      <label class="form-label">Content Area</label>
+      <p th:text="${boardDto.content}"></p>
     </div>
 
-    <button type="submit" class="btn btn-light">글쓰기</button>
+  <a th:href="@{'/post/edit' + ${boardDto.id}" class="btn btn-light">수정</a>
+
+  <form id="delete-form" th:action="@{'/post/' + ${boardDto.id}}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button id="delete-btn">삭제</button>
   </form>
+
 </div>
 </body>
 </html>

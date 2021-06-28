@@ -22,10 +22,14 @@
       <th>작성일</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="list">
     <tr th:each="board : ${boardList}">
-      <td><span th:text="${board.id}">1</span></td>
-      <td><span th:text="${board.title}">오늘도 화이팅</span> </td>
+      <td><span th:text="${board.id}" th:value="${board.id}">1</span></td>
+      <td>
+        <a th:href="@{'/bbsList/' + ${board.id}}">
+          <span th:text="${board.title}">오늘도 화이팅</span>
+        </a>
+      </td>
       <td><span th:text="${board.writer}">Jack</span></td>
       <td><span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}">2021-06-28</span></td>
     </tr>
@@ -35,6 +39,5 @@
   <a class="btn btn-light" th:href="@{/post}">글쓰기</a>
 
 </div>
-
 </body>
 </html>
