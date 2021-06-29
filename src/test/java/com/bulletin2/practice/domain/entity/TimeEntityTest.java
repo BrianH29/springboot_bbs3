@@ -1,6 +1,5 @@
 package com.bulletin2.practice.domain.entity;
 
-import com.bulletin2.practice.domain.Board;
 import com.bulletin2.practice.dto.BoardDto;
 import com.bulletin2.practice.repository.BoardRepository;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class TimeEntityTest {

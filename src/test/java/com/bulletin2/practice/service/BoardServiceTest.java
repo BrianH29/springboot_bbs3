@@ -1,9 +1,8 @@
 package com.bulletin2.practice.service;
 
-import com.bulletin2.practice.domain.Board;
+import com.bulletin2.practice.domain.entity.Board;
 import com.bulletin2.practice.dto.BoardDto;
 import com.bulletin2.practice.repository.BoardRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
