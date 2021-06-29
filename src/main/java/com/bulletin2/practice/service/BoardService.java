@@ -1,6 +1,6 @@
 package com.bulletin2.practice.service;
 
-import com.bulletin2.practice.domain.Board;
+import com.bulletin2.practice.domain.entity.Board;
 import com.bulletin2.practice.dto.BoardDto;
 import com.bulletin2.practice.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
