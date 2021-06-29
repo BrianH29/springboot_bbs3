@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <form action="/post/edit/ + ${boardDto.id}" method="post">
+    <input type="hidden" name="_method" value="put" />
+    <input type="hidden" th:value="${boardDto.id}" name="id" />
+
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" th:value="${boardDto.title}">
+    </div>
+    <div class="mb-3">
+      <label for="writer" class="form-label">Writer</label>
+      <input type="text" class="form-control" id="writer" name="writer" th:value="${boardDto.writer}" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Content Area</label>
+      <textarea class="form-control" id="content" name="content" rows="3" th:text="${boardDto.content}"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-light">수정</button>
+  </form>
+</div>
+</body>
+</html>
