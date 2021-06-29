@@ -14,7 +14,6 @@
     <div class="mb-3">
       <label class="form-label">Title</label>
       <h2 th:text="${boardDto.title}"></h2>
-      <p th:text="${boardDto.createdDate}"></p>
     </div>
     <div class="mb-3">
       <label class="form-label">Writer</label>
@@ -25,7 +24,7 @@
       <p th:text="${boardDto.content}"></p>
     </div>
 
-  <a th:href="@{'/post/edit' + ${boardDto.id}" class="btn btn-light">수정</a>
+  <!--<a th:href="@{'/post/edit' + ${boardDto.id}" class="btn btn-light">수정</a>-->
 
   <form id="delete-form" th:action="@{'/post/' + ${boardDto.id}}" method="post">
     <input type="hidden" name="_method" value="delete">

@@ -1,4 +1,4 @@
-package com.bulletin2.practice.domain;
+package com.bulletin2.practice.domain.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

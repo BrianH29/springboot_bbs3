@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import com.bulletin2.practice.domain.entity.TimeEntity;
 
 import javax.persistence.*;
 
@@ -35,8 +36,7 @@ public class Board extends TimeEntity{
     private String content;
 
     @Builder
-    public Board(Long id, String title, String writer, String content) {
-        this.id = id;
+    public Board(String title, String writer, String content) {
         this.title = title;
         this.writer = writer;
         this.content = content;

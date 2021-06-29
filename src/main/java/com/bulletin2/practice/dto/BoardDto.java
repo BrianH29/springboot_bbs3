@@ -21,7 +21,6 @@ public class BoardDto {
     //domain Board
     public Board toEntity(){
         Board build = Board.builder()
-                .id(id)
                 .title(title)
                 .writer(writer)
                 .content(content)
