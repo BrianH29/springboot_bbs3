@@ -1,9 +1,8 @@
 package com.bulletin2.practice.dto;
 
-import com.bulletin2.practice.domain.Board;
+import com.bulletin2.practice.domain.entity.Board;
 import lombok.*;
 
-import javax.persistence.SequenceGenerator;
 import java.time.LocalDateTime;
 
 @Getter
