@@ -26,7 +26,7 @@
     <tr th:each="board : ${boardList}">
       <td><span th:text="${board.id}" th:value="${board.id}">1</span></td>
       <td>
-        <a th:href="@{'/bbsList/' + ${board.id}}">
+        <a th:href="@{'/post/' + ${board.id}}">
           <span th:text="${board.title}">오늘도 화이팅</span>
         </a>
       </td>
