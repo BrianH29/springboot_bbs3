@@ -8,20 +8,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.spliterator;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 @SpringBootTest
 class BoardServiceTest {
     @Autowired
     private BoardRepository boardRepository;
 
-    //when
+    //given
     String title = "Hello there";
     String writer = "Jane";
     String content = "GoodBye java";
@@ -29,7 +27,7 @@ class BoardServiceTest {
     @Test
     void getBoardList() {
 
-        //given
+        //when
         BoardDto boardDto = BoardDto.builder()
                 .title(title)
                 .writer(writer)
@@ -47,7 +45,7 @@ class BoardServiceTest {
 
     @Test
     void getPost() {
-        //given
+        //when
         BoardDto boardDto = BoardDto.builder()
                 .title(title)
                 .writer(writer)
