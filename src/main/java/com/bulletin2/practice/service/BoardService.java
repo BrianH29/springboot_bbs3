@@ -5,7 +5,9 @@ import com.bulletin2.practice.dto.BoardDto;
 import com.bulletin2.practice.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.plaf.multi.MultiInternalFrameUI;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,7 @@ public class BoardService {
                 .title(board.getTitle())
                 .writer(board.getWriter())
                 .content(board.getContent())
+                .fileId(board.getFileId())
                 .createdDate(board.getCreatedDate())
                 .build();
         return boardDto;

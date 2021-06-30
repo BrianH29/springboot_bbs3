@@ -1,22 +1,31 @@
 package com.bulletin2.practice.controller;
 
 import com.bulletin2.practice.dto.BoardDto;
+import com.bulletin2.practice.dto.FileDto;
 import com.bulletin2.practice.service.BoardService;
+import com.bulletin2.practice.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class BoardController {
     private BoardService boardService;
+    private FileService fileService;
 
     @Autowired
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, FileService fileService) {
         this.boardService = boardService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/bbsList")
@@ -32,8 +41,41 @@ public class BoardController {
     }
 
     @PostMapping("/post")
-    public String write(BoardDto boardDto){
-        boardService.savePost(boardDto);
+    public String write(@RequestParam("upfile") MultipartFile files, BoardDto boardDto){
+        try{
+            String originFilename = files.getOriginalFilename();
+
+            //업로드하는 시점의 날짜 와 시간
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            String currentTime = sdf.format(new Date());
+
+            int ranNum = (int)(Math.random()*90000+10000);
+
+            //파일 속성 .jpg 짤라오기
+            int dot = originFilename.lastIndexOf(".");
+            String ext = originFilename.substring(dot);
+
+            //파일명을 바꿔주기 위해 ex)20210630140522987320.jpg
+            String fileName = currentTime + ranNum + ext;
+
+            String savePath = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/";
+            String filePath = savePath + "\\" + fileName;
+
+            files.transferTo(new File(filePath));
+
+            FileDto fileDto = new FileDto();
+            fileDto.setOriginFilename(originFilename);
+            fileDto.setFilename(fileName);
+            fileDto.setFilePath(filePath);
+
+            Long fileId = fileService.saveFile(fileDto);
+            boardDto.setFileId(fileId);
+            boardService.savePost(boardDto);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         return "redirect:/";
     }
 

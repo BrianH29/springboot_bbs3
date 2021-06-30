@@ -35,10 +35,14 @@ public class Board extends TimeEntity{
     @Column(columnDefinition = "text", nullable = false)
     private String content;
 
+    @Column
+    private Long fileId;
+
     @Builder
-    public Board(String title, String writer, String content) {
+    public Board(String title, String writer, String content, Long fileId) {
         this.title = title;
         this.writer = writer;
         this.content = content;
+        this.fileId = fileId;
     }
 }

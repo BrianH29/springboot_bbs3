@@ -11,5 +11,10 @@ spring:
         format_sql: true
         ddl-auto: create
 
+logging:
+  level:
+    org.hibernate.SQL:  debug
+    org.hibernate.type : trace
+
   server:
     port: 3000
