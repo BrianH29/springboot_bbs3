@@ -6,6 +6,7 @@
 - [x] read post
 - [x] edit & delete post
 - [ ] REST api
-- [ ] multipart/form-data upload file
+- [x] multipart/form-data upload file
+- [x] download file
 - [ ] search
 - [ ] paging
