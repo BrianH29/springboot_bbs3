@@ -6,6 +6,11 @@ import com.bulletin2.practice.service.BoardService;
 import com.bulletin2.practice.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -61,9 +70,6 @@ public class BoardController {
             String savePath = request.getServletContext().getRealPath("/uploadImage");
             String filePath = savePath + "/" + fileName;
 
-            System.out.println("====================savePath =================");
-            System.out.println(savePath);
-
             files.transferTo(new File(filePath));
 
             FileDto fileDto = new FileDto();
@@ -85,8 +91,10 @@ public class BoardController {
     @GetMapping("/post/{id}")
     public String detail(@PathVariable("id") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
+        FileDto fileDto = fileService.getFile(id);
 
         model.addAttribute("boardDto", boardDto);
+        model.addAttribute("fileDto", fileDto);
         return "bbsDetail";
     }
 
@@ -107,5 +115,18 @@ public class BoardController {
     public String delete(@PathVariable("id") Long id){
         boardService.deletePost(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<Resource> download(@PathVariable("fileId") Long fileId) throws IOException{
+        FileDto fileDto = fileService.getFile(fileId);
+        Path path = Paths.get(fileDto.getFilePath());
+
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=/" + fileDto.getOriginFilename())
+                .body(resource);
     }
 }
