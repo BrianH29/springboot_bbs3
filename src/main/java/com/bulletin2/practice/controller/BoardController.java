@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class BoardController {
     }
 
     @PostMapping("/post")
-    public String write(@RequestParam("upfile") MultipartFile files, BoardDto boardDto){
+    public String write(@RequestParam("upfile") MultipartFile files, HttpServletRequest request, BoardDto boardDto){
         try{
             String originFilename = files.getOriginalFilename();
 
@@ -58,8 +58,11 @@ public class BoardController {
             //파일명을 바꿔주기 위해 ex)20210630140522987320.jpg
             String fileName = currentTime + ranNum + ext;
 
-            String savePath = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/";
-            String filePath = savePath + "\\" + fileName;
+            String savePath = request.getServletContext().getRealPath("/uploadImage");
+            String filePath = savePath + "/" + fileName;
+
+            System.out.println("====================savePath =================");
+            System.out.println(savePath);
 
             files.transferTo(new File(filePath));
 
