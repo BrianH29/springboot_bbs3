@@ -23,6 +23,10 @@
       <label class="form-label">Content Area</label>
       <p th:text="${boardDto.content}"></p>
     </div>
+    <div class="mb-3" th:if="${boardDto.fileId}">
+        <label class="form-label">Attachment:</label>
+        <a class="card-text" th:href="@{'/download/' + ${boardDto.fileId}}" th:text="${fileDto.originFilename}">
+    </div>
 
   <a th:href="@{'/post/edit/' + ${boardDto.id}}"  class="btn btn-light">수정</a>
 
