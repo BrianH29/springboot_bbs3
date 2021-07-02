@@ -13,28 +13,36 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class BoardController {
     private BoardService boardService;
     private FileService fileService;
+    private String fileBaseDirectories;
 
     @Autowired
     public BoardController(BoardService boardService, FileService fileService) {
         this.boardService = boardService;
         this.fileService = fileService;
+    }
+
+    public void fileBaseDirector(HttpServletRequest request){
+        fileBaseDirectories = request.getServletContext().getRealPath("/uploadImage");
     }
 
     @GetMapping("/bbsList")
@@ -50,42 +58,21 @@ public class BoardController {
     }
 
     @PostMapping("/post")
-    public String write(@RequestParam("upfile") MultipartFile files, HttpServletRequest request, BoardDto boardDto){
+    public ResponseEntity write(@RequestParam("upfile") MultipartFile files){
+        String fileName = StringUtils.cleanPath(files.getOriginalFilename());
+        Path path = Paths.get(fileBaseDirectories + fileName);
+
         try{
-            String originFilename = files.getOriginalFilename();
-
-            //업로드하는 시점의 날짜 와 시간
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            String currentTime = sdf.format(new Date());
-
-            int ranNum = (int)(Math.random()*90000+10000);
-
-            //파일 속성 .jpg 짤라오기
-            int dot = originFilename.lastIndexOf(".");
-            String ext = originFilename.substring(dot);
-
-            //파일명을 바꿔주기 위해 ex)20210630140522987320.jpg
-            String fileName = currentTime + ranNum + ext;
-
-            String savePath = request.getServletContext().getRealPath("/uploadImage");
-            String filePath = savePath + "/" + fileName;
-
-            files.transferTo(new File(filePath));
-
-            FileDto fileDto = new FileDto();
-            fileDto.setOriginFilename(originFilename);
-            fileDto.setFilename(fileName);
-            fileDto.setFilePath(filePath);
-
-            Long fileId = fileService.saveFile(fileDto);
-            boardDto.setFileId(fileId);
-            boardService.savePost(boardDto);
-
-        }catch(Exception e){
+            Files.copy(files.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        }catch(IOException e){
             e.printStackTrace();
         }
 
-        return "redirect:/";
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/files/download/")
+                .path(fileName)
+                .toUriString();
+        return ResponseEntity.ok(fileDownloadUri);
     }
 
     @GetMapping("/post/{id}")
